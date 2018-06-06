@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    "alwaysStrict": true,
+    "declaration": true,
+    "lib": ["es2017"],
+    "module": "commonjs",
+    // TODO: reenable this
+    "noImplicitAny": false,
+    // TODO: reenable this
+    "strictNullChecks": false,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "outDir": "./dist",
+    "removeComments": true,
+    "sourceMap": true,
+    "strictFunctionTypes": true,
+    "target": "es5"
+  },
+  "include": ["src/**/*"]
+}
