@@ -1,3 +1,5 @@
+import { Item } from '../types/svgo';
+
 export const convertRoundedRectToPath = {
   active: true,
   type: 'perItem',
@@ -7,18 +9,7 @@ export const convertRoundedRectToPath = {
 
 const none = { value: 0 };
 
-/**
- * Converts a rounded rect to a more compact path.
- * It also allows further optimizations like
- * combining paths with similar attributes.
- *
- * @see http://www.w3.org/TR/SVG/shapes.html
- *
- * @param {Object} item current iteration item
- * @param {Object} params plugin params
- * @return {Boolean} if false, item will be filtered out
- */
-function convertRoundedRectToPathFn(item: any, params: any): any {
+function convertRoundedRectToPathFn(item: Item) {
   if (
     !item.isElem('rect') ||
     !item.hasAttr('width') ||

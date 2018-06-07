@@ -42,6 +42,7 @@ import * as svg2js from 'svgo/lib/svgo/svg2js';
 // Custom plugins.
 import { convertRoundedRectToPath } from '../plugins/convertRoundedRectToPath';
 import { convertSvgToVd } from '../plugins/convertSvgToVd';
+import { moveInheritableAttrsToElems } from '../plugins/moveInheritableAttrsToElems';
 import { replaceUseElems } from '../plugins/replaceUseElems';
 
 // The complete list is available here: https://github.com/svg/svgo/blob/master/.svgo.yml
@@ -75,6 +76,7 @@ const pluginsData = {
   convertRoundedRectToPath,
   moveElemsAttrsToGroup,
   moveGroupAttrsToElems,
+  moveInheritableAttrsToElems,
   collapseGroups,
   convertPathData,
   convertTransform,

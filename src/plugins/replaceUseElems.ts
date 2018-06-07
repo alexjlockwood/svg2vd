@@ -15,7 +15,7 @@ export const replaceUseElems = {
  * @param {Object} document the root document
  * @param {Object} params plugin params
  */
-function replaceUseElemsFn(document: any, params: any): any {
+function replaceUseElemsFn(document: any) {
   const defsElems = document.querySelectorAll('defs') || [];
 
   const queryReferencedElementFn = (selector: string) => {

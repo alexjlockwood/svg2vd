@@ -5,7 +5,6 @@
 
 import * as cli from 'commander';
 
-import { js2svg } from 'svgo/lib/svgo/js2svg';
 import { optimizeSvg } from './svgo';
 
 import fs = require('fs');
@@ -156,7 +155,7 @@ function optimizeDirectory(
     console.log(`Processing directory '${dir}':\n`);
   }
   return readDirFn(dir).then(files => {
-    // Take only *.xml files.
+    // Take only *.svg files.
     const svgFiles = files.filter(name => /\.svg$/.test(name));
     return svgFiles.length
       ? Promise.all(
@@ -169,7 +168,7 @@ function optimizeDirectory(
           ),
         )
       : Promise.reject(
-          new Error(`No XML files were found in directory: '${dir}'`),
+          new Error(`No SVG files were found in directory: '${dir}'`),
         );
   });
 }
