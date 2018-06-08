@@ -18,6 +18,7 @@
 // TODO: investigate whether to support 'transform' attribute on the 'svg' node.
 // TODO: confirm that color names (i.e. 'black', 'blue', etc.) are converted to hex prior to this plugin running
 // TODO: rename input file if it contains dashes and stuff like that
+// TODO: resolve percentage dimensions based on the current viewbox?
 
 import * as tinycolor from 'tinycolor2';
 
