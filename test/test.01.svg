@@ -1,0 +1,15 @@
+<svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <g fill="#292936" fill-rule="evenodd">
+    <path d="M12 15h2v2h-2v-2zm0 3h2v2h-2v-2zm3-3h2v2h-2v-2zm0 3h2v2h-2v-2zm3-3h2v2h-2v-2zm0 3h2v2h-2v-2z"/>
+    <path d="M23 12H9v11h14V12zM12 7h8V5h3v2h3v19H6V7h3V5h3v2z"/>
+  </g>
+</svg>
+
+@@@
+
+<vector android:width="32dp" android:height="32dp" android:viewportWidth="32" android:viewportHeight="32" xmlns:android="http://schemas.android.com/apk/res/android">
+  <group>
+    <path android:pathData="M12 15h2v2h-2v-2zm0 3h2v2h-2v-2zm3-3h2v2h-2v-2zm0 3h2v2h-2v-2zm3-3h2v2h-2v-2zm0 3h2v2h-2v-2z" android:fillColor="#292936" android:fillType="evenOdd"/>
+    <path android:pathData="M23 12H9v11h14V12zM12 7h8V5h3v2h3v19H6V7h3V5h3v2z" android:fillColor="#292936" android:fillType="evenOdd"/>
+  </group>
+</vector>
