@@ -1,4 +1,4 @@
-// TODO: remove inheritable attributes from groups after we apply them to their children
+// TODO: remove inheritable attributes from groups after we apply them to their children in all cases?
 // TODO: should non-group nodes pass down inheritable attrs (i.e. svg, clip-path, use, def, etc)?
 
 import { Item } from '../types/svgo';
@@ -38,6 +38,8 @@ function moveInheritableAttrsToElemsFn(item: Item) {
       .filter(child => !child.hasAttr(attr.name))
       .forEach(child => child.addAttr({ ...attr }));
   });
+
+  // TODO: remove the inheritable attributes from the group?
 
   return undefined;
 }
