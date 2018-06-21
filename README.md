@@ -89,3 +89,4 @@ npm run test
   [npm-badge-url]: https://www.npmjs.com/package/svg2vd
   [vscode]: https://code.visualstudio.com/
   [npm]: https://www.npmjs.com/get-npm
+
