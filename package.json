@@ -1,11 +1,11 @@
 {
-  "name": "jaylen",
+  "name": "svg2vd",
   "version": "1.0.0",
   "description": "SVG to Vector Drawable converter",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "bin": {
-    "jaylen": "./bin/jaylen"
+    "jaylen": "./bin/svg2vd"
   },
   "scripts": {
     "prepublishOnly": "npm run build",
@@ -15,7 +15,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/alexjlockwood/jaylen"
+    "url": "https://github.com/alexjlockwood/svg2vd"
   },
   "keywords": [
     "SVG",
