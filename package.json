@@ -5,7 +5,7 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "bin": {
-    "jaylen": "./bin/svg2vd"
+    "svg2vd": "./bin/svg2vd"
   },
   "scripts": {
     "prepublishOnly": "npm run build",
