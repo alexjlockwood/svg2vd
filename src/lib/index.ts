@@ -37,18 +37,13 @@ export async function run() {
   cli
     .version(pkgJson.version)
     .arguments('[file]')
-    .option('-s, --string <string>', 'input VD or AVD string')
-    // TODO: support multiple inputs/outputs?
+    .option('-s, --string <string>', 'input SVG string')
     .option('-i, --input <file>', 'input file/directory, or "-" for STDIN')
-    // TODO: support multiple inputs/outputs
     .option(
       '-o, --output <file>',
-      'output file/directory (same as the input file by default), or "-" for STDOUT',
+      'output file/directory (an XML file w/ the same name as the input file by default), or "-" for STDOUT',
     )
-    .option(
-      '-d, --dir <dir>',
-      'optimize and rewrite all *.xml files in a directory',
-    )
+    .option('-d, --dir <dir>', 'convert all *.svg files in a directory')
     .option('-q, --quiet', 'only output error messages')
     // TODO: add precision option
     // .option(
@@ -61,7 +56,7 @@ export async function run() {
   let output: string[] = cli.output ? [cli.output] : undefined;
 
   if (
-    (!input.length || input[0] === '-') &&
+    (input.length === 0 || input[0] === '-') &&
     !cli.string &&
     !cli.dir &&
     process.stdin.isTTY === true
@@ -104,10 +99,6 @@ export async function run() {
     output = ['-'];
   }
 
-  // if (opts.datauri) {
-  //   config.datauri = opts.datauri;
-  // }
-
   if (cli.dir) {
     const outputDir: string = (output && output[0]) || cli.dir;
     await optimizeDirectory({ quiet: cli.quiet }, cli.dir, outputDir).then(
@@ -128,17 +119,21 @@ export async function run() {
       });
     } else {
       await Promise.all(
-        input.map((file, n) =>
-          optimizeFile({ quiet: cli.quiet }, file, output[n]),
-        ),
+        input
+          .filter(name => /\.svg$/.test(name))
+          .map((file, n) =>
+            optimizeFile(
+              { quiet: cli.quiet },
+              file,
+              svgToXmlFileName(output[n]),
+            ),
+          ),
       ).then(() => {}, printErrorAndExit);
     }
     return;
   }
 
   if (cli.string) {
-    // TODO: support decoding data uris or no?
-    // const data = decodeSVGDatauri(opts.string);
     const data = cli.string;
     await processData({ quiet: cli.quiet }, data, output[0]);
     return;
@@ -163,7 +158,7 @@ function optimizeDirectory(
             optimizeFile(
               config,
               path.resolve(dir, name),
-              path.resolve(output, name),
+              path.resolve(output, svgToXmlFileName(name)),
             ),
           ),
         )
@@ -171,6 +166,13 @@ function optimizeDirectory(
           new Error(`No SVG files were found in directory: '${dir}'`),
         );
   });
+}
+
+function svgToXmlFileName(name: string) {
+  if (name.endsWith('.svg')) {
+    name = name.slice(0, name.length - '.svg'.length);
+  }
+  return name.toLowerCase().replace(/[^a-z0-9]/gi, '_') + '.xml';
 }
 
 // TODO: fix implicit any error
@@ -185,7 +187,7 @@ function optimizeFile(
       if (error.code === 'EISDIR') {
         return optimizeDirectory(config, file, output);
       }
-      return checkOptimizeFileError(config, file, output, error);
+      return checkOptimizeFileError(error);
     },
   );
 }
@@ -196,24 +198,13 @@ function processData(
   output: string,
   input?: string,
 ) {
-  const startTime = Date.now();
-  const prevFileSize = Buffer.byteLength(data, 'utf8');
-
   return optimizeSvg(data).then(result => {
-    // if (config.datauri) {
-    //   result.data = encodeSVGDatauri(result.data, config.datauri);
-    // }
-    const resultFileSize = Buffer.byteLength(result, 'utf8');
-    const processingTime = Date.now() - startTime;
-
     return writeOutput(input, output, result).then(
       () => {
         if (!config.quiet && output !== '-') {
           if (input) {
-            console.log(`\n${path.basename(input)}:`);
+            console.log(`${input} -> ${output}`);
           }
-          printTimeInfo(processingTime);
-          printProfitInfo(prevFileSize, resultFileSize);
         }
       },
       error =>
@@ -238,31 +229,7 @@ function writeOutput(input: string, output: string, data: string) {
   );
 }
 
-function printTimeInfo(time: number) {
-  console.log(`Done in ${time} ms!`);
-}
-
-function printProfitInfo(inBytes: number, outBytes: number) {
-  const profitPercents = 100 - outBytes * 100 / inBytes;
-  console.log(
-    Math.round(inBytes / 1024 * 1000) / 1000 +
-      ' Kb' +
-      (profitPercents < 0 ? ' + ' : ' - ') +
-      '\x1b[32m' +
-      String(Math.abs(Math.round(profitPercents * 10) / 10) + '%') +
-      '\x1b[0m' +
-      ' = ' +
-      Math.round(outBytes / 1024 * 1000) / 1000 +
-      ' Kb',
-  );
-}
-
-function checkOptimizeFileError(
-  config: { quiet: boolean },
-  input: string,
-  output: string,
-  error: { code: string; path: string },
-) {
+function checkOptimizeFileError(error: { code: string; path: string }) {
   if (error.code === 'ENOENT') {
     return Promise.reject(
       new Error(`No such file or directory '${error.path}'.`),
