@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
+  <path fill="#292936" fill-rule="evenodd" stroke="none" d="M18,12 L25,16 L25,19 L18,17 L18,22.6 L21,25 L21,28 L16,25 L11,28 L11,25 L14,22.6 L14,17 L7,19 L7,16 L14,12 L14,6 C14,4.8954305 14.8954305,4 16,4 C17.1045695,4 18,4.8954305 18,6 L18,12 Z"/>
+</svg>
+
+@@@
+
+<vector android:width="32dp" android:height="32dp" android:viewportWidth="32" android:viewportHeight="32" xmlns:android="http://schemas.android.com/apk/res/android">
+  <path android:fillColor="#292936" android:fillType="evenOdd" android:pathData="M18 12l7 4v3l-7-2v5.6l3 2.4v3l-5-3-5 3v-3l3-2.4V17l-7 2v-3l7-4V6c0-1.10457.89543-2 2-2s2 .89543 2 2v6z"/>
+</vector>

@@ -106,15 +106,23 @@ function convertPathItem(item: Item) {
       case 'd':
         addAndroidAttr(item, value, 'pathData');
         break;
-      case 'fill':
-        addAndroidAttr(item, convertToAndroidColor(value), 'fillColor');
+      case 'fill': {
+        const colorValue = convertToAndroidColor(value);
+        if (colorValue) {
+          addAndroidAttr(item, colorValue, 'fillColor');
+        }
         break;
+      }
       case 'fill-opacity':
         addAndroidAttr(item, value, 'fillAlpha');
         break;
-      case 'stroke':
-        addAndroidAttr(item, convertToAndroidColor(value), 'strokeColor');
+      case 'stroke': {
+        const colorValue = convertToAndroidColor(value);
+        if (colorValue) {
+          addAndroidAttr(item, colorValue, 'strokeColor');
+        }
         break;
+      }
       case 'stroke-opacity':
         addAndroidAttr(item, value, 'strokeAlpha');
         break;
